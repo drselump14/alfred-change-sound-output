@@ -57,8 +57,8 @@
 				<string></string>
 				<key>script</key>
 				<string>query=$1
-export PATH="/usr/local/bin:$PATH"
-/usr/local/bin/SwitchAudioSource  -a -t output| jq -R -s 'split("\n") | map(select(length&gt;0)) | map({"title": ., "arg": ., "icon": { "path": "./icon.png"} } )' | jq -s '{ "items": .[] }'</string>
+export PATH=&quot;/usr/local/bin:$PATH&quot;
+/usr/local/bin/SwitchAudioSource  -a -t output| jq -R -s &apos;split(&quot;\n&quot;) | map(select(length&gt;0)) | map({&quot;title&quot;: ., &quot;arg&quot;: ., &quot;icon&quot;: { &quot;path&quot;: &quot;./icon.png&quot;} } )&apos; | jq -s &apos;{ &quot;items&quot;: .[] }&apos;</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -87,11 +87,16 @@ export PATH="/usr/local/bin:$PATH"
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>export PATH="/usr/local/bin:$PATH"
-query=`echo "{query}" |  awk '{gsub(/.\(output\)/,"");}1' | sed 's/(\s)+$//'`
-SwitchAudioSource -s "$query"
-/Users/dr_selump14/.rbenv/versions/2.3.1/bin/growl -H localhost -m "Change sound output to $query " -i "./icon.png"
-say $query</string>
+				<string>export PATH=&quot;/usr/local/bin:$PATH&quot;
+query=`echo &quot;{query}&quot; |  awk &apos;{gsub(/.\(output\)/,&quot;&quot;);}1&apos; | sed &apos;s/(\s)+$//&apos;`
+SwitchAudioSource -s &quot;$query&quot;
+sleep 1
+say $query &amp;
+terminal-notifier \
+    -message &quot;Change sound output to $query&quot; \
+    -appIcon ./icon.png \
+    -sender com.runningwithcrayons.Alfred-3 \
+    -title &quot;Alfred&quot;</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
