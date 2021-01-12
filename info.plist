@@ -93,8 +93,8 @@
 				<string></string>
 				<key>script</key>
 				<string>query=$1
-export PATH="/opt/homebrew/bin:$PATH"
-/opt/homebrew/bin/SwitchAudioSource  -a -t output| jq -R -s 'split("\n") | map(select(length&gt;0)) | map({"title": ., "arg": ., "icon": { "path": "./icon.png"} } )' | jq -s '{ "items": .[] }'</string>
+export PATH="/usr/local/bin:$PATH:/opt/homebrew/bin:$PATH"
+SwitchAudioSource  -a -t output| jq -R -s 'split("\n") | map(select(length&gt;0)) | map({"title": ., "arg": ., "icon": { "path": "./icon.png"} } )' | jq -s '{ "items": .[] }'</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -123,7 +123,7 @@ export PATH="/opt/homebrew/bin:$PATH"
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>export PATH="/opt/homebrew/bin:$PATH:"
+				<string>export PATH="/usr/local/bin:$PATH:/opt/homebrew/bin:$PATH"
 query=`echo "{query}" |  awk '{gsub(/.\(output\)/,"");}1' | sed 's/(\s)+$//'`
 SwitchAudioSource -s "$query"</string>
 				<key>scriptargtype</key>
@@ -149,7 +149,7 @@ Requirement:
 - jq (brew install jq)
 - SwitchAudioSource (brew install switchaudio-osx)
 
-Works on Apple Silicon only.</string>
+Works both on Intel and Apple Silicon.</string>
 	<key>uidata</key>
 	<dict>
 		<key>38163BFB-14BA-4071-AF24-633928D9B5C3</key>
@@ -177,7 +177,7 @@ Works on Apple Silicon only.</string>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>webaddress</key>
 	<string>https://github.com/bpetrynski/alfred-change-sound-output/</string>
 </dict>
