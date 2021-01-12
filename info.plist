@@ -4,12 +4,21 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.cakmet14.change_sound</string>
-	<key>category</key>
-	<string>Tools</string>
 	<key>connections</key>
 	<dict>
 		<key>38163BFB-14BA-4071-AF24-633928D9B5C3</key>
-		<array/>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>71694BB3-2456-4C4E-AF2D-053BAEF4D997</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>E47C1DA3-417C-479F-B8AC-C4294927395C</key>
 		<array>
 			<dict>
@@ -25,20 +34,47 @@
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string>cak met</string>
+	<string>cak met &amp; Bartosz Petryński</string>
 	<key>description</key>
 	<string></string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>change sound</string>
+	<string>Change Sound Output</string>
 	<key>objects</key>
 	<array>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Changed output to {query}</string>
+				<key>title</key>
+				<string>Sound output changed</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>71694BB3-2456-4C4E-AF2D-053BAEF4D997</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>escaping</key>
@@ -57,8 +93,8 @@
 				<string></string>
 				<key>script</key>
 				<string>query=$1
-export PATH=&quot;/usr/local/bin:$PATH&quot;
-/usr/local/bin/SwitchAudioSource  -a -t output| jq -R -s &apos;split(&quot;\n&quot;) | map(select(length&gt;0)) | map({&quot;title&quot;: ., &quot;arg&quot;: ., &quot;icon&quot;: { &quot;path&quot;: &quot;./icon.png&quot;} } )&apos; | jq -s &apos;{ &quot;items&quot;: .[] }&apos;</string>
+export PATH="/usr/local/bin:$PATH:/opt/homebrew/bin:$PATH"
+SwitchAudioSource  -a -t output| jq -R -s 'split("\n") | map(select(length&gt;0)) | map({"title": ., "arg": ., "icon": { "path": "./icon.png"} } )' | jq -s '{ "items": .[] }'</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -66,7 +102,7 @@ export PATH=&quot;/usr/local/bin:$PATH&quot;
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
-				<string>change sound output</string>
+				<string>Change Sound Output</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -77,7 +113,7 @@ export PATH=&quot;/usr/local/bin:$PATH&quot;
 			<key>uid</key>
 			<string>E47C1DA3-417C-479F-B8AC-C4294927395C</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -87,16 +123,9 @@ export PATH=&quot;/usr/local/bin:$PATH&quot;
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>export PATH=&quot;/usr/local/bin:$PATH&quot;
-query=`echo &quot;{query}&quot; |  awk &apos;{gsub(/.\(output\)/,&quot;&quot;);}1&apos; | sed &apos;s/(\s)+$//&apos;`
-SwitchAudioSource -s &quot;$query&quot;
-sleep 1
-say $query &amp;
-terminal-notifier \
-    -message &quot;Change sound output to $query&quot; \
-    -appIcon ./icon.png \
-    -sender com.runningwithcrayons.Alfred-3 \
-    -title &quot;Alfred&quot;</string>
+				<string>export PATH="/usr/local/bin:$PATH:/opt/homebrew/bin:$PATH"
+query=`echo "{query}" |  awk '{gsub(/.\(output\)/,"");}1' | sed 's/(\s)+$//'`
+SwitchAudioSource -s "$query"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -113,13 +142,27 @@ terminal-notifier \
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string>Change sound output using Alfred Workflow.
+
+Requirement:
+
+- jq (brew install jq)
+- SwitchAudioSource (brew install switchaudio-osx)
+
+Works both on Intel and Apple Silicon.</string>
 	<key>uidata</key>
 	<dict>
 		<key>38163BFB-14BA-4071-AF24-633928D9B5C3</key>
 		<dict>
 			<key>xpos</key>
-			<integer>520</integer>
+			<integer>510</integer>
+			<key>ypos</key>
+			<integer>250</integer>
+		</dict>
+		<key>71694BB3-2456-4C4E-AF2D-053BAEF4D997</key>
+		<dict>
+			<key>xpos</key>
+			<integer>725</integer>
 			<key>ypos</key>
 			<integer>250</integer>
 		</dict>
@@ -131,7 +174,11 @@ terminal-notifier \
 			<integer>250</integer>
 		</dict>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>1.2</string>
 	<key>webaddress</key>
-	<string></string>
+	<string>https://github.com/bpetrynski/alfred-change-sound-output/</string>
 </dict>
 </plist>
